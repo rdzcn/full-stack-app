@@ -1,8 +1,9 @@
 class Star {
-  constructor(x, y, z = 100) {
+  constructor(x = 100, y = 100, z = 100, randomColor) {
     this._x = x;
     this._y = y;
     this._z = z;
+    this._randomColor = randomColor;
 
     this._lastZ = z + 1;
   }
@@ -46,9 +47,9 @@ class Star {
     let coordX = (this._x / this._z) * canvas.width;
     let coordY = (this._y / this._z) * canvas.height;
 
-    canvas.context.lineWidth = 1;
-    canvas.context.fillStyle = "#029182";
-    canvas.context.strokeStyle = "#FFFFFF";
+    canvas.context.lineWidth = 2;
+    canvas.context.fillStyle = this._randomColor;
+    canvas.context.strokeStyle = this._randomColor;
     canvas.context.beginPath();
     canvas.context.moveTo(lastCoordX, lastCoordY);
     canvas.context.lineTo(coordX, coordY);
