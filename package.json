@@ -2,8 +2,10 @@
   "name": "full-stack-app",
   "private": true,
   "version": "0.0.0",
+  "main": "server.js",
   "type": "module",
   "scripts": {
+    "start": "nodemon server.js localhost 8080",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -11,9 +13,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "nodemon": "^3.0.3",
     "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "p5": "^1.9.0"
+  }
 }
