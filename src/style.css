@@ -1,5 +1,5 @@
 :root {
-  font-family: "Protest Riot", Inter, system-ui, Avenir, Helvetica, Arial,
+  font-family: "Protest Strike", Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -47,7 +47,7 @@ h1 {
 
 .hero-text,
 .hero-subtext {
-  color: #fff;
+  color: #ffe81f;
 }
 
 .container {
