@@ -1,6 +1,6 @@
 import Canvas from "./canvas.js";
 import Star from "./star.js";
-import { getRandomHexColor } from "./utils/index.js";
+import { getRandomHexColor } from "../utils/index.js";
 
 document.addEventListener("DOMContentLoaded", function (event) {
   // Setup Objects
@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         Math.random() * canvas.width - canvas.width / 2,
         Math.random() * canvas.height - canvas.height / 2,
         Math.random() * (canvas.width / 2),
-        getRandomHexColor(),
-      ),
+        getRandomHexColor()
+      )
     );
   }
 

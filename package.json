@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js localhost 8080",
+    "start": "nodemon api/server.js localhost 8080",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

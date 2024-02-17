@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as http from "node:http";
 import * as path from "node:path";
-const directory = process.cwd();
+import SampleData from "./data/some.json" assert { type: "json" };
 
 const PORT = 8080;
 
@@ -36,6 +36,16 @@ const prepareFile = async (url) => {
 
 http
   .createServer(async (req, res) => {
+    console.log("REQ", req.url)
+    if (req.url.includes("/api/articles")) {
+      res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow these HTTP methods
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow these headers
+      console.log("SOME", JSON.stringify(SampleData));
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({data: SampleData}));
+      return;
+    }
     const file = await prepareFile(req.url);
     const statusCode = file.found ? 200 : 404;
     const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;

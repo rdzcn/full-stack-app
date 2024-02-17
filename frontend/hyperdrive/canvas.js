@@ -1,16 +1,12 @@
 class Canvas {
-  constructor(canvas, background = "#000", framesPerSecond = 60) {
+  constructor(canvas) {
     this._canvas = canvas;
     this._context = canvas.getContext("2d");
     this._ratio = 1;
-    this._framesPerSecond = framesPerSecond;
-    this._background = background;
+    this._framesPerSecond = 60;
+    this._background = "#000000";
     this._originX = 0;
     this._originY = 0;
-
-    if (framesPerSecond <= 0) {
-      this._framesPerSecond = 60;
-    }
 
     this.setup();
     window.addEventListener("resize", this.setup.bind(this));
