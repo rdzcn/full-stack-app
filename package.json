@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon api/server.js localhost 8080",
     "dev": "vite",
