@@ -45,6 +45,20 @@ h6 {
   color: #ffe81f;
 }
 
+/* .hero-text {
+  position: relative;
+  background-image: -webkit-linear-gradient(#032d50 25%, #00a1ef 35%, white 50%, #20125f 50%, #8313e7 55%, #ff61af 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 4px #f5f5f5;
+  font-size: 100px;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;
+  margin: 0;
+  line-height: 1;
+} */
+
 .container {
   margin: 0;
   padding: 0;
