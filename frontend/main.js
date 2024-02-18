@@ -1,7 +1,7 @@
 import "./styles/index.css";
 import { setupCounter } from "./counter.js";
 // import "./hyperdrive/index.js";
-import "./playground/index.js";
+import "./playground/index";
 
 const fetchArticles = async () => {
   try {

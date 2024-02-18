@@ -1,5 +1,7 @@
-const NO_OF_PARTICLES = 1000;
-const PARTICLE_BASE_RADIUS = 1;
+import { getRandomNumber } from "../utils";
+
+const NO_OF_PARTICLES = 100;
+const PARTICLE_BASE_RADIUS = 8;
 const PERSPECTIVE_WIDTH = 500;
 const SPEED = 2;
 
@@ -11,9 +13,9 @@ let speed = SPEED;
 let particles = [];
 
 function randomizeParticle(particle) {
-  particle.x = Math.random() * canvasWidth;
-  particle.y = Math.random() * canvasHeight;
-  particle.z = Math.random() * 1500 + 500;
+  particle.x = getRandomNumber(0, canvasWidth);
+  particle.y = getRandomNumber(0, canvasHeight);
+  particle.z = getRandomNumber(0, canvasWidth);
   return particle
 }
 
@@ -23,6 +25,50 @@ function Particle(x, y, z) {
     this.z = z || 0;
     this.pastZ = 0;
 }
+
+const draw = () => {
+  
+  console.log("Drawing");
+
+  context.beginPath();
+  context.moveTo(0, centerY);
+  context.lineTo(canvasWidth, centerY);
+  context.strokeStyle = "#fff";
+  context.stroke();
+
+  context.beginPath();
+  context.moveTo(centerX, 0);
+  context.lineTo(centerX, canvasHeight);
+  context.strokeStyle = "#fff";
+  context.stroke();
+
+  context.beginPath();
+  context.arc(centerX, centerY, 5, 0, 2 * Math.PI, true);
+  context.fill();
+
+  context.beginPath();
+  for (let i = 0; i < NO_OF_PARTICLES; i++) {
+    let p = particles[i];
+    
+    p.pastZ = p.z;
+    p.z -= speed;
+    if (p.z <= 0) {
+      randomizeParticle(p);
+    }
+
+    const angle = Math.atan2(p.y - centerY, p.x - centerX);
+    const newY = p.y + Math.sin(angle) * speed;
+    const newX = p.x + Math.cos(angle) * speed;
+
+    p.x = newX;
+    p.y = newY;
+
+    context.arc(newX, newY, PARTICLE_BASE_RADIUS, 0, 2 * Math.PI, true);
+    context.fill();
+    context.closePath();
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
   let canvas = document.querySelector("#playground");
@@ -43,49 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
   //populate particles array
   for (let i = 0; i < NO_OF_PARTICLES; i++) {
     particles[i] = randomizeParticle(new Particle());
-    particles[i].z -= 500 * Math.random();
   }
 
-  function nextAnimationFrame() {
-    context.save();
-    context.fillStyle = 'rgb(0, 0, 0)';
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
-    context.restore();
+  console.log(particles);
+  setInterval(loop, 1000/60)
 
-    let x, y, radius;
-    let relativeX, relativeY, relativeRadius;
-    let pastX, pastY, pastRelativeRadius, pastRadius;
-    
-    context.beginPath();
-    for (let i = 0; i < NO_OF_PARTICLES; i++) {
-      const particle = particles[i];
-      particle.pastZ = particle.z;
-      particle.z -= speed;
-      
-      if (particle.z <= 0) {
-        randomizeParticle(particle);
-      } 
-      
-      relativeX = particle.x - centerX;
-      relativeY = particle.y - centerY;
-
-      relativeRadius = PERSPECTIVE_WIDTH / particle.z;
-      radius = PARTICLE_BASE_RADIUS * relativeRadius;
-      x = centerX + relativeX * relativeRadius;
-      y = centerY + relativeY * relativeRadius;
-
-      pastRelativeRadius = PERSPECTIVE_WIDTH / particle.pastZ;
-      pastX = centerX + (particle.x - centerX) * pastRelativeRadius;
-      pastY = centerY + (particle.y - centerY) * pastRelativeRadius;
-      pastRadius = PARTICLE_BASE_RADIUS * pastRelativeRadius;
-
-      context.arc(pastX, pastY, radius, 0, Math.PI * 2, true);
-      context.closePath();
-    }
-    context.fill();
-    requestAnimationFrame(nextAnimationFrame);
-  }
-  
-  nextAnimationFrame();
 }, false)
 
+const loop = () => {
+  console.log("Looping");
+  context.clearRect(0, 0, canvasWidth, canvasHeight);
+  draw();
+
+}
