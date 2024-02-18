@@ -1,7 +1,7 @@
 import { getRandomNumber } from "../utils";
 
 const NO_OF_PARTICLES = 100;
-const PARTICLE_BASE_RADIUS = 8;
+const PARTICLE_BASE_RADIUS = 0.5;
 const PERSPECTIVE_WIDTH = 500;
 const SPEED = 2;
 
@@ -28,45 +28,55 @@ function Particle(x, y, z) {
 
 const draw = () => {
   
-  console.log("Drawing");
+  let p;
+  let relativeX, relativeY;
+  let currX, currY, currRadius, currFocus;
+  let prevX, prevY, prevRadius, prevFocus;
+  let angle, currAngle, nextAngle;
 
-  context.beginPath();
-  context.moveTo(0, centerY);
-  context.lineTo(canvasWidth, centerY);
-  context.strokeStyle = "#fff";
-  context.stroke();
-
-  context.beginPath();
-  context.moveTo(centerX, 0);
-  context.lineTo(centerX, canvasHeight);
-  context.strokeStyle = "#fff";
-  context.stroke();
-
-  context.beginPath();
-  context.arc(centerX, centerY, 5, 0, 2 * Math.PI, true);
-  context.fill();
+  const halfPi = Math.PI / 2;
+  const atan2 = Math.atan2;
+  const sin = Math.sin;
+  const cos = Math.cos;
 
   context.beginPath();
   for (let i = 0; i < NO_OF_PARTICLES; i++) {
-    let p = particles[i];
+    p = particles[i];
     
     p.pastZ = p.z;
     p.z -= speed;
-    if (p.z <= 0) {
+
+    if (p.z < 1) {
       randomizeParticle(p);
+      continue
     }
 
-    const angle = Math.atan2(p.y - centerY, p.x - centerX);
-    const newY = p.y + Math.sin(angle) * speed;
-    const newX = p.x + Math.cos(angle) * speed;
+    relativeX = p.x - centerX;
+    relativeY = p.y - centerY;
 
-    p.x = newX;
-    p.y = newY;
+    
+    currFocus = PERSPECTIVE_WIDTH / p.z;
+    prevFocus = PERSPECTIVE_WIDTH / p.pastZ;
+    
+    currX = centerX + relativeX * currFocus;
+    currY = centerY + relativeY * currFocus;
+    currRadius = PARTICLE_BASE_RADIUS * currFocus;
+    
+    prevX = centerX + relativeX * prevFocus;
+    prevY = centerY + relativeY * prevFocus;
+    prevRadius = PARTICLE_BASE_RADIUS * prevFocus;
+    
+    angle = atan2(prevY - currY, prevX - currX);
+    currAngle = angle + halfPi;
+    nextAngle = angle - halfPi;
 
-    context.arc(newX, newY, PARTICLE_BASE_RADIUS, 0, 2 * Math.PI, true);
-    context.fill();
+    context.moveTo(prevX + prevRadius * cos(currAngle), prevY + prevRadius * sin(currAngle));
+    context.arc(prevX, prevY, prevRadius, currAngle, nextAngle, true);
+    context.lineTo(currX + currRadius * cos(nextAngle), currY + currRadius * sin(nextAngle));
+    context.arc(currX, currY, currRadius, nextAngle, currAngle, true);
     context.closePath();
   }
+  context.fill();
 }
 
 
@@ -91,13 +101,21 @@ document.addEventListener("DOMContentLoaded", function () {
     particles[i] = randomizeParticle(new Particle());
   }
 
-  console.log(particles);
-  setInterval(loop, 1000/60)
+  console.log("particles", particles)
+  const animate = () => {
+    loop();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 
 }, false)
 
 const loop = () => {
-  console.log("Looping");
+  context.save();
+  context.fillStyle = 'rgb(0, 0, 0)';
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
+  context.restore();
   context.clearRect(0, 0, canvasWidth, canvasHeight);
   draw();
 
