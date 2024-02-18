@@ -8,4 +8,4 @@ export const getSummaries = async (req, res) => {
   } catch (error) {
     console.error("ERROR", error);
   }
-}
+};

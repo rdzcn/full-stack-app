@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         Math.random() * canvas.width - canvas.width / 2,
         Math.random() * canvas.height - canvas.height / 2,
         Math.random() * (canvas.width / 2),
-        getRandomHexColor()
-      )
+        getRandomHexColor(),
+      ),
     );
   }
 
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         );
       }
     }
-  }, 1000 / 30);
+  }, 1000 / 20);
 
   // Draw Objects to the canvas
   canvas.draw(

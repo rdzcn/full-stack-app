@@ -36,14 +36,20 @@ const prepareFile = async (url) => {
 
 http
   .createServer(async (req, res) => {
-    console.log("REQ", req.url)
+    console.log("REQ", req.url);
     if (req.url.includes("/api/articles")) {
-      res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow these HTTP methods
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow these headers
+      res.setHeader("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS",
+      ); // Allow these HTTP methods
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization",
+      ); // Allow these headers
       console.log("SOME", JSON.stringify(SampleData));
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({data: SampleData}));
+      res.end(JSON.stringify({ data: SampleData }));
       return;
     }
     const file = await prepareFile(req.url);
