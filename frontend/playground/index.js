@@ -8,7 +8,6 @@ const SPEED = 2;
 let context;
 let canvasWidth, canvasHeight;
 let centerX, centerY;
-let mouseX, mouseY;
 let speed = SPEED;
 let particles = [];
 
@@ -90,7 +89,7 @@ document.addEventListener(
     canvas.style.backgroundColor = "black";
 
     const resize = () => {
-      canvasWidth = canvas.width = window.innerWidth;
+      canvasWidth = canvas.width = window.innerWidth - 15;
       canvasHeight = canvas.height = window.innerHeight;
       centerX = canvasWidth * 0.5;
       centerY = canvasHeight * 0.5;
@@ -106,7 +105,6 @@ document.addEventListener(
       particles[i] = randomizeParticle(new Particle());
     }
 
-    console.log("particles", particles);
     const animate = () => {
       loop();
       requestAnimationFrame(animate);

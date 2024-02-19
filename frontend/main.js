@@ -1,7 +1,9 @@
 import "./styles/index.css";
-import { setupCounter } from "./counter.js";
+// import { setupCounter } from "./counter.js";
 // import "./hyperdrive/index.js";
 import "./playground/index";
+// import "./tree";
+import "./automata/index";
 
 const fetchArticles = async () => {
   try {
