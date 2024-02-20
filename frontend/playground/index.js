@@ -89,7 +89,7 @@ document.addEventListener(
     canvas.style.backgroundColor = "black";
 
     const resize = () => {
-      canvasWidth = canvas.width = window.innerWidth - 15;
+      canvasWidth = canvas.width = window.innerWidth;
       canvasHeight = canvas.height = window.innerHeight;
       centerX = canvasWidth * 0.5;
       centerY = canvasHeight * 0.5;
